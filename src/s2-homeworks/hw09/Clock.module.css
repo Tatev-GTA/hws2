@@ -1,14 +1,74 @@
 .buttonsContainer {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
 }
 
 .clock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    max-width: 400px;
+    margin: 20px auto;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
 }
 
 .watch {
+    opacity: 0.9;
+    cursor: default;
 }
 
 .watch strong {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.watch strong:hover {
+    color: #555;
+}
+
+#hw9-button-start {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#hw9-button-start:disabled {
+    background-color: #90caf9;
+    cursor: not-allowed;
+}
+
+#hw9-button-stop {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#hw9-button-stop:disabled {
+    background-color: #ef9a9a;
+    cursor: not-allowed;
 }
 
 .more {
+    height: 20px;
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
 }

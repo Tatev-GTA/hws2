@@ -2,46 +2,72 @@ import React, {useState} from 'react'
 import s2 from '../../s1-main/App.module.css'
 import s from './HW13.module.css'
 import SuperButton from '../hw04/common/c2-SuperButton/SuperButton'
-import axios from 'axios'
+import axios, {AxiosError} from 'axios' // Իմպորտավորում ենք AxiosError-ը տիպավորման համար
 import success200 from './images/200.svg'
 import error400 from './images/400.svg'
 import error500 from './images/500.svg'
 import errorUnknown from './images/error.svg'
-
-/*
-* 1 - дописать функцию send
-* 2 - дизэйблить кнопки пока идёт запрос
-* 3 - сделать стили в соответствии с дизайном
-* */
 
 const HW13 = () => {
     const [code, setCode] = useState('')
     const [text, setText] = useState('')
     const [info, setInfo] = useState('')
     const [image, setImage] = useState('')
+    const [isLoading, setIsLoading] = useState(false) // Վիճակ՝ կոճակները անջատելու համար
 
     const send = (x?: boolean | null) => () => {
         const url =
             x === null
-                ? 'https://xxxxxx.ccc' // имитация запроса на не корректный адрес
+                ? 'https://xxxxxx.ccc' // Իմիտացիա անկոռեկտ հասցեի
                 : 'https://samurai.it-incubator.io/api/3.0/homework/test'
 
         setCode('')
         setImage('')
         setText('')
         setInfo('...loading')
+        setIsLoading(true) // Միացնել բեռնումը
 
         axios
             .post(url, {success: x})
             .then((res) => {
+                // 1. Հաջող պատասխան (200 OK)
                 setCode('Код 200!')
                 setImage(success200)
-                // дописать
-
+                setText(res.data.errorText)
+                setInfo(res.data.info)
             })
-            .catch((e) => {
-                // дописать
+            .catch((e: AxiosError) => {
+                // 1. Սխալի մշակում
+                const error = e.response
 
+                if (error) {
+                    // 400 կամ 500 սխալներ (API-ի պատասխանը)
+                    const status = error.status
+                    const data = error.data as any
+
+                    setCode(`Ошибка ${status}!`)
+                    setText(data.errorText || 'Server responded with an error.') // Օգտագործում ենք errorText բեքենդից
+                    setInfo(data.info || e.message)
+
+                    if (status === 500) {
+                        setImage(error500)
+                    } else if (status === 400) {
+                        setImage(error400)
+                    } else {
+                        setImage(errorUnknown) // Անհայտ API սխալ
+                    }
+
+                } else {
+                    // Network Error կամ անկոռեկտ URL (օրինակ՝ 'https://xxxxxx.ccc')
+                    setCode('Error!')
+                    setText(`Network Error\n${e.name}`)
+                    setImage(errorUnknown)
+                    setInfo(e.message) // Ցույց տալ ամբողջական սխալի հաղորդագրությունը
+                }
+            })
+            .finally(() => {
+                // 2. Անջատել բեռնումը, անկախ արդյունքից
+                setIsLoading(false)
             })
     }
 
@@ -55,8 +81,7 @@ const HW13 = () => {
                         id={'hw13-send-true'}
                         onClick={send(true)}
                         xType={'secondary'}
-                        // дописать
-
+                        disabled={isLoading} // Կոճակը անջատված է բեռնման ժամանակ
                     >
                         Send true
                     </SuperButton>
@@ -64,8 +89,7 @@ const HW13 = () => {
                         id={'hw13-send-false'}
                         onClick={send(false)}
                         xType={'secondary'}
-                        // дописать
-
+                        disabled={isLoading} // Կոճակը անջատված է բեռնման ժամանակ
                     >
                         Send false
                     </SuperButton>
@@ -73,17 +97,15 @@ const HW13 = () => {
                         id={'hw13-send-undefined'}
                         onClick={send(undefined)}
                         xType={'secondary'}
-                        // дописать
-
+                        disabled={isLoading} // Կոճակը անջատված է բեռնման ժամանակ
                     >
                         Send undefined
                     </SuperButton>
                     <SuperButton
                         id={'hw13-send-null'}
-                        onClick={send(null)} // имитация запроса на не корректный адрес
+                        onClick={send(null)}
                         xType={'secondary'}
-                        // дописать
-
+                        disabled={isLoading} // Կոճակը անջատված է բեռնման ժամանակ
                     >
                         Send null
                     </SuperButton>
@@ -96,7 +118,7 @@ const HW13 = () => {
 
                     <div className={s.textContainer}>
                         <div id={'hw13-code'} className={s.code}>
-                            {code}
+                            {isLoading ? '...loading' : code}
                         </div>
                         <div id={'hw13-text'} className={s.text}>
                             {text}

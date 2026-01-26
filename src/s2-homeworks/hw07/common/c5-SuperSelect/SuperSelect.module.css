@@ -1,9 +1,33 @@
 .select {
+    width: 176px;
+    height: 36px;
+    padding: 5px 24px 5px 12px;
+    border: 1px solid #D1D5DB;
+    border-radius: 5px;
+    background-color: white;
+    font-size: 16px;
+    font-weight: 500;
+    color: #0F172A;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
 }
 
 .select:focus {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+.option {
+    padding: 8px 12px;
+    background-color: white;
+    color: #0F172A;
+}
 
 .option:hover {
+    background-color: #F1F5F9;
 }

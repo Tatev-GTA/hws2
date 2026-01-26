@@ -1,3 +1,24 @@
+/* Loader.module.css */
 .loader {
-    /*свг и/или анимация*/
+    /* Չափեր և ձև */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+
+    /* Գույներ և հաստություն */
+    border: 4px solid #f3f3f3; /* Բաց մոխրագույն հիմք */
+    border-top: 4px solid #3498db; /* Կապույտ գույն վերևի եզրի համար (պտտվող մասը) */
+
+    /* Անիմացիա */
+    animation: spin 1s linear infinite; /* Կիրառել պտտման անիմացիան */
+}
+
+/* Պտտման հիմնական կադրերի սահմանում */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

@@ -7,6 +7,7 @@ type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonE
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
     xType?: string
+    className?: string;
 }
 
 const SuperButton: React.FC<SuperButtonPropsType> = (
@@ -18,11 +19,14 @@ const SuperButton: React.FC<SuperButtonPropsType> = (
     }
 ) => {
     const finalClassName = s.button
-        // + (disabled
-        //         ? ...
-        //         : xType === 'red'
-        //             ? ...
-        + (className ? ' ' + className : '') // задачка на смешивание классов
+        + (disabled
+            ? ' ' + s.disabled // Применяем стиль для отключенной кнопки
+            : xType === 'red'
+                ? ' ' + s.red // Применяем красный стиль
+                : xType === 'secondary'
+                    ? ' ' + s.secondary // Применяем второстепенный стиль
+                    : ' ' + s.default) // Стиль по умолчанию, если нет конкретного xType или он не красный
+        + (className ? ' ' + className : ''); // Добавляем любой переданный пользовательский класс // задачка на смешивание классов
 
     return (
         <button

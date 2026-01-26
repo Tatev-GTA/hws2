@@ -17,16 +17,16 @@ import s2 from '../../s1-main/App.module.css'
 * */
 
 // types
-export type AffairPriorityType = any // need to fix any
+export type AffairPriorityType = 'high' | 'middle' | 'low' // Исправлено: конкретные строковые литералы
 export type AffairType = {
-    _id: any // need to fix any
-    name: any // need to fix any
+    _id: number // Исправлено: _id является числом
+    name: string // Исправлено: name является строкой
     priority: AffairPriorityType
 }
 export type FilterType = 'all' | AffairPriorityType
 
 // constants
-const defaultAffairs: any = [ // need to fix any
+const defaultAffairs: AffairType[] = [ // Исправлено: указан тип AffairType[]
     {_id: 1, name: 'React', priority: 'high'}, // студенты могут изменить содержимое name и количество элементов в массиве, ...priority не менять!
     {_id: 2, name: 'anime', priority: 'low'},
     {_id: 3, name: 'games', priority: 'low'},
@@ -34,29 +34,37 @@ const defaultAffairs: any = [ // need to fix any
     {_id: 5, name: 'html & css', priority: 'middle'},
 ]
 
-// pure helper functions
-export const filterAffairs = (affairs: any, filter: any): any => { // need to fix any
-
-
-    return affairs // need to fix
+// pure helper functions (чистые вспомогательные функции)
+export const filterAffairs = (affairs: AffairType[], filter: FilterType): AffairType[] => { // Исправлены типы
+    if (filter === 'all') {
+        return affairs; // Если фильтр 'all', возвращаем все дела
+    } else {
+        // Иначе фильтруем дела по их приоритету
+        return affairs.filter(affair => affair.priority === filter);
+    }
 }
-export const deleteAffair = (affairs: any, _id: any): any => { // need to fix any
 
-    return affairs // need to fix
+export const deleteAffair = (affairs: AffairType[], _id: number): AffairType[] => { // Исправлены типы
+    // Возвращаем новый массив дел, исключая то, у которого _id совпадает с переданным
+    return affairs.filter(affair => affair._id !== _id);
 }
 
 function HW2() {
-    const [affairs, setAffairs] = useState<any>(defaultAffairs) // need to fix any
+    const [affairs, setAffairs] = useState<AffairType[]>(defaultAffairs) // Исправлено: указан тип AffairType[]
     const [filter, setFilter] = useState<FilterType>('all')
 
     const filteredAffairs = filterAffairs(affairs, filter)
-    const deleteAffairCallback = (_id: any) => { // need to fix any
-        // need to fix
+
+    const deleteAffairCallback = (_id: number) => { // Исправлен тип
+        // Вызываем функцию deleteAffair для получения нового массива дел без удаленного элемента
+        const newAffairs = deleteAffair(affairs, _id);
+        // Обновляем состояние дел
+        setAffairs(newAffairs);
     }
 
     return (
         <div id={'hw2'}>
-            <div className={s2.hwTitle}>Homework #2</div>
+            <div className={s2.hwTitle}>Домашняя работа #2</div> {/* Перевел заголовок */}
             <div className={s2.hw}>
                 <Affairs
                     data={filteredAffairs}

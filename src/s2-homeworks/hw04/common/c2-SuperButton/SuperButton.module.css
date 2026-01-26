@@ -1,36 +1,47 @@
+/* SuperButton.module.css */
+
 .button {
-}
-
-.disabled {
-}
-
-.secondary {
+    /* Базовые стили для всех кнопок (например, padding, font, border-radius) */
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    /* ...другие общие стили */
 }
 
 .default {
+    /* Цвет/фон обычной кнопки */
+    background-color: #007bff; /* Пример синего */
+    color: white;
 }
 
 .red {
+    /* Цвет/фон красной кнопки */
+    background-color: #dc3545; /* Пример красного */
+    color: white;
 }
 
-.default:hover {
+.secondary {
+    /* Цвет/фон второстепенной кнопки */
+    background-color: #6c757d; /* Пример серого */
+    color: white;
 }
 
-.red:hover {
+.disabled {
+    /* Стили для отключенного состояния */
+    opacity: 0.5;
+    cursor: not-allowed;
+    /* Возможно, вы также захотите переопределить background-color для disabled состояния, если необходимо */
+    background-color: #e0e0e0; /* Более светлый фон, когда disabled */
+    color: #a0a0a0; /* Более светлый текст, когда disabled */
 }
 
-.secondary:hover {
+/* Вы также можете добавить состояния hover/active для .button, .default, .red, .secondary */
+.button:hover:not(.disabled) {
+    /* общий эффект наведения для активных кнопок */
 }
-
-
-.default:active {
+.default:hover:not(.disabled) {
+    /* специфический hover для default */
 }
-
-.secondary:active {
-}
-
-.red:active {
-}
-
-.button:disabled {
-}
+/* и так далее */

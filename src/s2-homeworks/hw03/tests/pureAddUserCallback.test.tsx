@@ -2,12 +2,17 @@ import React from 'react'
 import {pureAddUserCallback} from '../HW3'
 
 let initialState: any[]
-const setName = (a: any[]) => {
-    initialState = a
-}
+let setName: React.Dispatch<React.SetStateAction<any[]>>
 
 beforeEach(() => {
     initialState = []
+    setName = jest.fn((value) => {
+        if (typeof value === 'function') {
+            initialState = value(initialState)
+        } else {
+            initialState = value
+        }
+    })
 })
 
 test('name 1', () => {

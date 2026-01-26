@@ -2,14 +2,14 @@ import React, {ChangeEvent, KeyboardEvent} from 'react'
 import s from './Greeting.module.css'
 
 type GreetingPropsType = {
-    name: any // need to fix any
-    setNameCallback: any // need to fix any
-    addUser: any // need to fix any
-    onBlur: any // need to fix any
-    onEnter: any // need to fix any
-    error: any // need to fix any
-    totalUsers: any // need to fix any
-    lastUserName?: any // need to fix any
+    name: string // Fixed: name is a string (the value of the input)
+    setNameCallback: (e: ChangeEvent<HTMLInputElement>) => void // Fixed: Takes a ChangeEvent from an input
+    addUser: () => void // Fixed: A function that adds a user, takes no arguments, returns void
+    onBlur: () => void // Fixed: A function for blur event, takes no arguments, returns void
+    onEnter: (e: KeyboardEvent<HTMLInputElement>) => void // Fixed: Takes a KeyboardEvent from an input
+    error: string // Fixed: error is a string message
+    totalUsers: number // Fixed: totalUsers is a number
+    lastUserName?: string // Fixed: lastUserName is an optional string
 }
 
 // презентационная компонента (для верстальщика)
@@ -25,7 +25,8 @@ const Greeting: React.FC<GreetingPropsType> = (
         lastUserName,
     } // деструктуризация пропсов
 ) => {
-    const inputClass = s.errorInput // need to fix with (?:)
+    // Fixed: inputClass should apply s.errorInput only if there's an error
+    const inputClass = error ? s.errorInput : s.input; // Assuming s.input is your default input style
 
     return (
         <div id={'hw3-form'} className={s.greetingForm}>
@@ -42,7 +43,7 @@ const Greeting: React.FC<GreetingPropsType> = (
                         id={'hw3-input'}
                         value={name}
                         onChange={setNameCallback}
-                        className={inputClass}
+                        className={inputClass} // Applied dynamic class
                         onKeyDown={onEnter}
                         onBlur={onBlur}
                     />
@@ -55,7 +56,7 @@ const Greeting: React.FC<GreetingPropsType> = (
                     id={'hw3-button'}
                     onClick={addUser}
                     className={s.button}
-                    disabled={!name.trim()}
+                    disabled={!name.trim()} // disabled if name is empty or just spaces
                 >
                     add
                 </button>
